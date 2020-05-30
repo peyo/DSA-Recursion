@@ -1,7 +1,3 @@
-// Could not solve
-// Reference:
-// https://github.com/PatientPadawan/DSA-Recursion/blob/master/mazeSolver.js
-
 const maze = [
   [' ', ' ', ' ', '*', ' ', ' ', ' '],
   ['*', '*', ' ', '*', ' ', '*', ' '],
@@ -10,57 +6,38 @@ const maze = [
   [' ', ' ', ' ', ' ', ' ', ' ', 'e'],
 ];
 
-let solutionPath = '';
-const reverseString = (str) => {
-  const splitString = str.split('');
-  const reverseStringArray = splitString.reverse();
-  const reversedString = reverseStringArray.join();
-  return reversedString;
-};
+const solve = (maze, row = 0, col = 0, path = "") => {
 
-const legalMove = (matrix, x, y) => {
-  const i = matrix.length; // how many rows
-  const j = matrix[0].length; // how many columns
-  if (i && j) {
-    if (x >= 0 && x < i && y >= 0 && y < j) {
-      if (matrix[x][y] === ' ' || matrix[x][y] === 'e') {
-        return true;
-      }
-      return false;
-    }
-    return false;
+  if (row < 0 || col < 0 || row === maze.length || col === maze[row].length) {
+    return
   }
-  return false;
-};
 
-const mazeSolver = (matrix, x, y) => {
-  // base case
-  if (x === matrix.length - 1 && y === matrix[0].length - 1) {
-    return true;
-  }
-  // general case
-  if (legalMove(matrix, x, y)) {
-    if (mazeSolver(matrix, x, y + 1)) {
-      solutionPath = solutionPath.concat('R');
-      return true;
-    }
-    if (mazeSolver(matrix, x + 1, y)) {
-      solutionPath = solutionPath.concat('D');
-      return true;
-    }
-    if (mazeSolver(matrix, x, y - 1)) {
-      solutionPath = solutionPath.concat('L');
-      return true;
-    }
-    if (mazeSolver(matrix, x - 1, y)) {
-      solutionPath = solutionPath.concat('U');
-      return true;
-    }
-    return false;
-  }
-  solutionPath = '';
-  return false;
-};
+  // Base case
+  if (maze[row][col] === "e") {
+    return console.log(`Solved at (${row}, ${col})! Path to exit: ${path}`)
 
-mazeSolver(maze, 0, 0);
-console.log(`Path to the exit: ${reverseString(solutionPath)}`);
+    // General case
+  } else if (maze[row][col] === "*") {
+    return
+  }
+
+  // Marker
+  maze[row][col] = "*"
+
+  // Right
+  solve(maze, row, col + 1, path.concat("R"))
+
+  // Down
+  solve(maze, row + 1, col, path.concat("D"))
+
+  // Left
+  solve(maze, row, col - 1, path.concat("L"))
+
+  // Up
+  solve(maze, row - 1, col, path.concat("U"))
+
+  // Remove marker
+  maze[row][col] = " "
+}
+
+console.log(solve(maze));
