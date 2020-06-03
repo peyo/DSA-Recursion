@@ -8,7 +8,7 @@ const maze = [
 
 const solve = (maze, row = 0, col = 0, path = "") => {
 
-  if (row < 0 || col < 0 || row === maze.length || col === maze[row].length) {
+  if (row < 0 || col < 0 || row === maze.length || col === maze[row].length ) {
     return
   }
 

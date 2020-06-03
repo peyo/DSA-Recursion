@@ -9,7 +9,7 @@ const count = function(input) {
   }
 }
 
-let input = 4
+const input = 4
 console.log(count(input));
 
 // 4: Another sheep jumps over the fence

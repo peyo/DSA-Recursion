@@ -1,19 +1,17 @@
-const split = function (str, delim) {
-  let arr = [""];
-  let j = 0;
+const split = (str, delim, words) => {
 
-  for (let i = 0; i < str.length; i++) {
-    if (str.charAt(i) === delim) {
-      j++;
-      arr.push("");
-    } else {
-      arr[j] = arr[j] + str.charAt(i);
-    }
+  let newStr = str.replace(delim, " ");
+  let i = str.indexOf(delim)
+
+  if (i !== -1) {
+    words.push(newStr.substr(0, i));
+    return split(newStr.slice(i + 1), delim, words);
+  } else {
+    words.push(newStr);
+    return words;
   }
-  return arr;
-};
+}
 
-console.log(split("02/20/2020", "/"));
-
-// Reference:
-// https://stackoverflow.com/questions/24765710/writing-a-string-splitting-function-without-using-the-split-method-in-javascript
+const str = "02/20/2020";
+const delim = "/";
+console.log(split(str, delim, words = []))
